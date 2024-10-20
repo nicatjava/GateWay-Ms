@@ -1,19 +1,25 @@
 server:
-  port: 8083
+  port: 8080
 
 spring:
   cloud:
     gateway:
       routes:
-        - id: customer-ms
-          uri: http://localhost:8080
+        - id: incomes-ms
+          uri: ${base-uri-incomes}
           predicates:
-            - Path=/api/v1/customers/**
-        - id: product-ms
-          uri: http://localhost:8081
+            - Path=/${apiVersion}/incomes/**
+        - id: outcomes-ms
+          uri: ${base-uri-outcomes}
           predicates:
-            - Path=/api/v1/products/**
-        - id: order-ms
-          uri: http://localhost:8082
+            - Path=/${apiVersion}/outcomes/**
+        - id: balance-ms
+          uri: ${base-uri-balance}
           predicates:
-            - Path=/api/v1/orders/**
+            - Path=/${apiVersion}/balance/**
+
+# common variables for routes
+base-uri-incomes: http://localhost:8081
+base-uri-outcomes: http://localhost:8081
+base-uri-balance: http://localhost:8082
+apiVersion: api/v1
